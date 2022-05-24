@@ -13,6 +13,7 @@ public interface ServerService {
 
     Server create(Server server);
 
+
     //can change server status once pinged
     Server ping(String ipAddress) throws IOException;
     Collection<Server> list(int limit);

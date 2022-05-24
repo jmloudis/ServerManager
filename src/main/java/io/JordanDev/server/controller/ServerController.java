@@ -78,6 +78,20 @@ public class ServerController {
         );
     }
 
+    @GetMapping("/scan")
+    public ResponseEntity<Response> scanServer(String subnet) throws IOException {
+//        Server server = serverService.getAllActiveAddresses(subnet);
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(now())
+                        .data(of("server", serverService.getAllActiveAddresses("192.168.1")))
+                        .message("LAN Scanned")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
     @GetMapping("/get/{id}")
     public ResponseEntity<Response> getServer(@PathVariable("id") Long id)  {
 
