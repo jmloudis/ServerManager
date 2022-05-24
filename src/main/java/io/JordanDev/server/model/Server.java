@@ -12,18 +12,17 @@ import javax.validation.constraints.NotEmpty;
  * @author JordanDev
  * @version 1.0.0
  * @since 5/7/2022
- */
+ * */
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Server {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
-
     @Column(unique = true)
     @NotEmpty(message = "IP Address cannot be empty or null")
     private String ipAddress;

@@ -74,17 +74,8 @@ public class ServerServiceImpl implements ServerService{
 
     @Override
     public Server getAllActiveAddresses(String subnet) throws IOException {
-        int timeout=1000;
-        for (int i=1;i<255;i++){
-            String host = subnet + "." + i;
-            Server server = serverRepo.findByIpAddress(host);
-            if (InetAddress.getByName(host).isReachable(timeout)){
-                System.out.println(host + " is reachable");
-            }
 
-            return server;
 
-        }
 
         return null;
 
