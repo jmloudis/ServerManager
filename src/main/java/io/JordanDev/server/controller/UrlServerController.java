@@ -27,18 +27,18 @@ public class UrlServerController {
         return "index";
     }
 
-//    @GetMapping("/scan")
-//    public String ScanLan() throws IOException {
-//        int timeout=1000;
-//        for (int i=1;i<50;i++){
-//            String host = "192.168.1." + i;
-//            if (InetAddress.getByName(host).isReachable(timeout)){
-//                System.out.println(host);
-//            }
-//        }
-//
-//        return "index";
-//    }
+    @GetMapping("/newServer")
+    public String showNewServer(Model model){
+        Server server = new Server();
+        model.addAttribute("newServer", server);
+        return "index";
+    }
+
+    @PostMapping("/saveServer")
+    public String saveServer(@ModelAttribute("Server") Server server){
+        serverService.create(server);
+        return "redirect:/fullList";
+    }
 
     @RequestMapping(value = "/test", method = { RequestMethod.GET, RequestMethod.POST })
     public String ScanTest(@ModelAttribute("Server") Server server) throws IOException {
@@ -48,14 +48,15 @@ public class UrlServerController {
             if (InetAddress.getByName(host).isReachable(timeout)){
                 System.out.println(host);
                 server.setIpAddress(host);
-                serverService.create(server);
+                serverService.saveServer(server);
                 serverService.getAllServers();
 
             }
 
         }
 
-        return "redirect:/index";
+
+        return "redirect:/";
     }
 
 

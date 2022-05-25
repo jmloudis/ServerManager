@@ -20,10 +20,12 @@ public interface ServerService {
     Server get(Long id);
     Server update(Server server);
 
-    Server getAllActiveAddresses(String subnet) throws IOException;
+    void saveServer(Server server);
+
     Boolean delete(Long id);
 
     List<Server> getAllServers();
+
 
 
 }
