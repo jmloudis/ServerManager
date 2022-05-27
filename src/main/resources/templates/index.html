@@ -26,6 +26,7 @@
                     </div>
                     <div class="col-sm-6">
                         <button type="button" class="btn btn-primary">Print Report</button>
+                        <button type="button" class="btn btn-info">Scan LAN</button>
 
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                             <i class="material-icons">&#xE147;</i>
@@ -74,12 +75,9 @@
                             </td>
 
                             <td>
-                                <a style="cursor: pointer;">
-                                    <i
-                                            class="material-icons" title="Ping server">&#xe328;</i>
-
-                                    <i
-                                            class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                <a style="cursor: pointer;" th:href="@{/ping/{id}(id=${server.ipAddress})}" >
+                                    <i class="material-icons" title="Ping server">&#xe328;</i>
+                                    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
                                 </a>
                             </td>
 
@@ -99,7 +97,7 @@
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form >
+            <form th:action="@{/saveServer}" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Server</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -107,29 +105,29 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>IP</label>
-                        <input type="text" name="ipAddress" class="form-control" required>
+                        <input type="text" th:name="ipAddress" class="form-control" >
                     </div>
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" class="form-control" th:name="name">
                     </div>
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
                                 <label>Memory</label>
-                                <input type="text"  class="form-control" required>
+                                <input type="text" class="form-control" th:name="memory">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
                                 <label>Type</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" th:name="type">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <select name="status" class="form-control" required>
+                        <select name="status" class="form-control" th:name="status">
                             <option value="SERVER_UP">SERVER UP</option>
                             <option value="SERVER_DOWN">SERVER DOWN</option>
                         </select>

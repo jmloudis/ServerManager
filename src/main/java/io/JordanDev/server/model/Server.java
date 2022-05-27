@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 
 /**
  * @author JordanDev
@@ -16,9 +17,9 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Server {
+//@NoArgsConstructor
+//@AllArgsConstructor
+public class Server implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +34,20 @@ public class Server {
 
     //enum
     private Status status;
+
+    public Server() {
+
+    }
+
+    public Server(Long id, String ipAddress, String name, String memory, String type, String imageUrl, Status status) {
+        this.id = id;
+        this.ipAddress = ipAddress;
+        this.name = name;
+        this.memory = memory;
+        this.type = type;
+        this.imageUrl = imageUrl;
+        this.status = status;
+    }
 
 
 }

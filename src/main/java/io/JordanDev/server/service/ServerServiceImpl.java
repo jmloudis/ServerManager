@@ -73,17 +73,16 @@ public class ServerServiceImpl implements ServerService{
     }
 
     @Override
-    public Server getAllActiveAddresses(String subnet) throws IOException {
+    public void saveServer(Server server) {
 
-
-
-        return null;
-
+        serverRepo.saveAll(getAllServers());
     }
+
 
     @Override
     public Server update(Server server) {
         log.info("Updating server: {}", server.getName());
+
         return serverRepo.save(server);
     }
 
@@ -104,4 +103,7 @@ public class ServerServiceImpl implements ServerService{
     public List<Server> getAllServers() {
         return serverRepo.findAll();
     }
+
+
+
 }
