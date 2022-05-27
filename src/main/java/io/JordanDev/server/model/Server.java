@@ -17,8 +17,8 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class Server implements Serializable {
 
     @Id
@@ -34,6 +34,20 @@ public class Server implements Serializable {
 
     //enum
     private Status status;
+
+    public Server() {
+
+    }
+
+    public Server(Long id, String ipAddress, String name, String memory, String type, String imageUrl, Status status) {
+        this.id = id;
+        this.ipAddress = ipAddress;
+        this.name = name;
+        this.memory = memory;
+        this.type = type;
+        this.imageUrl = imageUrl;
+        this.status = status;
+    }
 
 
 }

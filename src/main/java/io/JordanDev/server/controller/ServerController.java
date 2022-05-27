@@ -76,6 +76,7 @@ public class ServerController {
                         .statusCode(CREATED.value())
                         .build()
         );
+
     }
 
 //    @GetMapping("/scan")

@@ -1,17 +1,22 @@
 package io.JordanDev.server.controller;
 
+import io.JordanDev.server.enumeration.Status;
 import io.JordanDev.server.model.Server;
 import io.JordanDev.server.service.ServerServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @Controller
+@Slf4j
 public class UrlServerController {
     private ServerServiceImpl serverService;
 
@@ -35,7 +40,10 @@ public class UrlServerController {
     }
 
     @PostMapping("/saveServer")
-    public String saveServer(@ModelAttribute("Server") Server server){
+    public String saveServer(@Valid @ModelAttribute("Server") Server server, BindingResult result){
+        if (result.hasErrors()) {
+            return "index";
+        }
         serverService.create(server);
         return "redirect:/fullList";
     }
@@ -48,15 +56,23 @@ public class UrlServerController {
             if (InetAddress.getByName(host).isReachable(timeout)){
                 System.out.println(host);
                 server.setIpAddress(host);
-                serverService.saveServer(server);
+                serverService.create(server);
                 serverService.getAllServers();
-
             }
 
         }
 
 
         return "redirect:/";
+    }
+
+    @GetMapping("/ping/{ipAddress}")
+    public String pingIpAddress(@PathVariable("ipAddress") String ipAddress) throws IOException {
+        Server server = serverService.ping(ipAddress);
+        server.getStatus();
+        log.info(server.getIpAddress() + server.getStatus());
+        return "redirect:/fullList";
+
     }
 
 
