@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class UrlServerController {
     }
 
 
-    @GetMapping("/fullList")
+    @GetMapping("/")
     public String getFullList(Model model){
         model.addAttribute("allServers", serverService.list(30));
         return "index";
@@ -45,7 +46,7 @@ public class UrlServerController {
             return "index";
         }
         serverService.create(server);
-        return "redirect:/fullList";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/test", method = { RequestMethod.GET, RequestMethod.POST })
@@ -56,12 +57,12 @@ public class UrlServerController {
             if (InetAddress.getByName(host).isReachable(timeout)){
                 System.out.println(host);
                 server.setIpAddress(host);
+                server.setStatus(Status.SERVER_UP);
                 serverService.create(server);
                 serverService.getAllServers();
             }
 
         }
-
 
         return "redirect:/";
     }
@@ -70,10 +71,19 @@ public class UrlServerController {
     public String pingIpAddress(@PathVariable("ipAddress") String ipAddress) throws IOException {
         Server server = serverService.ping(ipAddress);
         server.getStatus();
-        log.info(server.getIpAddress() + server.getStatus());
-        return "redirect:/fullList";
+        log.info(server.getIpAddress() + " " + server.getStatus());
+        return "redirect:/";
+    }
+
+    @GetMapping("/deleteServer/{id}")
+    public String deleteServer(@PathVariable("id") Long id){
+        serverService.delete(id);
+        return "redirect:/";
 
     }
+
+
+
 
 
 

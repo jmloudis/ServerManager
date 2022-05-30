@@ -68,7 +68,6 @@ public class ServerServiceImpl implements ServerService{
     @Override
     public Server get(Long id) {
         log.info("Fetching server by Id: {}", id);
-
         return serverRepo.findById(id).get();
     }
 
