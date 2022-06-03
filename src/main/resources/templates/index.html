@@ -1,33 +1,27 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>ServerFrontend</title>
-    <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Overpass">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css">
+<head th:replace="~{fragments/header :: head}"> </head>
 
-
-</head>
 <body>
-
+<nav th:replace="~{fragments/sidebar :: sidebar}" class="hide"></nav>
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Manage Servers</h2>
+                        <button id="sidebarCollapse" class="btn-info text-left" >
+                            <i class="fas fa-align-left"></i>
+                            <span>Toggle Sidebar</span>
+                        </button>
                     </div>
+
+<!--                    <div class="col-sm-6">-->
+<!--                        <h2>Manage Servers</h2>-->
+<!--                    </div>-->
                     <div class="col-sm-6">
                         <button type="button" class="btn btn-primary">Print Report</button>
-                        <a class="btn btn-info" th:href="@{/test}" onclick="toastr.warning('Hi! I am warning message.');">Scan LAN</a>
+                        <a class="btn btn-info" th:href="@{/test}">Scan LAN</a>
 
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                             <i class="material-icons">&#xE147;</i>
@@ -45,9 +39,9 @@
                     </div>
                 </div>
             </div> <br>
-                    <div class="col-md-12 single-note-item text-center">
-                        <div class="spinner-border text-info" role="status"></div>
-                    </div>
+<!--                    <div class="col-md-12 single-note-item text-center">-->
+<!--                        <div class="spinner-border text-info" role="status"></div>-->
+<!--                    </div>-->
 
                     <table class="table table-striped table-hover" id="servers">
                         <thead>
@@ -64,7 +58,9 @@
                         </thead>
                         <tbody  >
                         <tr th:each="server : ${allServers}">
-                            <td><img th:src="@{'data:image/png;base64,' + ${server.getImageUrl()}}"/></td>
+                            <td>
+                                <img th:src="@{${server.getImageUrl()}}"/>
+                            </td>
                             <td th:text="${server.getIpAddress()}"></td>
                             <td th:text="${server.getName()}"></td>
                             <td th:text="${server.getMemory()}"></td>
@@ -98,6 +94,7 @@
 
         </div>
     </div>
+</div>
 </div>
 
 <!--Notifications-->
@@ -193,13 +190,27 @@
                 return false;
             }
     }
-    // $( document ).ready(function() {
-    //     $('#deleteButton').click(function() {
-    //
-    //     });
-    // });
+</script>
+<script>
+    $(document).ready(function () {
 
 
+        $('#dismiss, .overlay').on('click', function () {
+            // hide sidebar
+            $('#sidebar').addClass('active');
+            // hide overlay
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+    });
 </script>
 
 </body>
