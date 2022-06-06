@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +32,19 @@ public class UrlServerController {
     public String getFullList(Model model){
         model.addAttribute("allServers", serverService.list(30));
         return "index";
+    }
+
+    @GetMapping("/serversUp")
+    public String getServersUp(Model model){
+        model.addAttribute("serversUp", serverService.getServerStatus(Status.SERVER_UP));
+        return "serverUp";
+    }
+
+    @GetMapping("/serversDown")
+    public String getServersDown(Model model){
+        model.addAttribute("serversDown", serverService.getServerStatus(Status.SERVER_DOWN));
+
+        return "user/serverDown";
     }
 
     @GetMapping("/newServer")
