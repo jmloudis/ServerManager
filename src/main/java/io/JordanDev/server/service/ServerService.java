@@ -1,10 +1,12 @@
 package io.JordanDev.server.service;
 
+import io.JordanDev.server.enumeration.Status;
 import io.JordanDev.server.model.Server;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 // functionality / features to implement later in the ServerServiceImpl
@@ -25,6 +27,10 @@ public interface ServerService {
     Boolean delete(Long id);
 
     List<Server> getAllServers();
+
+    List<Server> getServerStatus(Status status);
+
+
 
 
 

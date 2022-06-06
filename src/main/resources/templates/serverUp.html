@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: head}"> </head>
 
 <body>
+
 <nav th:replace="~{fragments/sidebar :: sidebar}" class="hide"></nav>
 <div class="container-xl">
     <div class="table-responsive">
@@ -16,9 +17,9 @@
                         </button>
                     </div>
 
-<!--                    <div class="col-sm-6">-->
-<!--                        <h2>Manage Servers</h2>-->
-<!--                    </div>-->
+                    <!--                    <div class="col-sm-6">-->
+                    <!--                        <h2>Manage Servers</h2>-->
+                    <!--                    </div>-->
                     <div class="col-sm-6">
                         <button type="button" class="btn btn-primary">Print Report</button>
                         <a class="btn btn-info" th:href="@{/test}">Scan LAN</a>
@@ -31,66 +32,66 @@
                         <span>
                           <select  name="status" id="dynamicSelect"
                                    class="btn btn-info" style="height: 32.91px;">
-                              <option value="/">ALL</option>
-                              <option value="/serversUp" >SERVER UP</option>
+                              <option value="/serversUp">SERVER UP</option>
+                              <option value="/" >ALL</option>
                               <option value="/serversDown">SERVER DOWN</option>
                           </select>
                       </span>
                     </div>
                 </div>
             </div> <br>
-<!--                    <div class="col-md-12 single-note-item text-center">-->
-<!--                        <div class="spinner-border text-info" role="status"></div>-->
-<!--                    </div>-->
+            <!--                    <div class="col-md-12 single-note-item text-center">-->
+            <!--                        <div class="spinner-border text-info" role="status"></div>-->
+            <!--                    </div>-->
 
-                    <table class="table table-striped table-hover" id="servers">
-                        <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>IP Address</th>
-                            <th>Name</th>
-                            <th>Memory</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Ping</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody  >
-                        <tr th:each="server : ${allServers}">
-                            <td>
-                                <img th:src="@{${server.getImageUrl()}}"/>
-                            </td>
-                            <td th:text="${server.getIpAddress()}"></td>
-                            <td th:text="${server.getName()}"></td>
-                            <td th:text="${server.getMemory()}"></td>
-                            <td th:text="${server.getType()}"></td>
-                            <td>
+            <table class="table table-striped table-hover" id="servers">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>IP Address</th>
+                    <th>Name</th>
+                    <th>Memory</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Ping</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody  >
+                <tr th:each="server : ${serversUp}">
+                    <td>
+                        <img th:src="@{${server.getImageUrl()}}"/>
+                    </td>
+                    <td th:text="${server.getIpAddress()}"></td>
+                    <td th:text="${server.getName()}"></td>
+                    <td th:text="${server.getMemory()}"></td>
+                    <td th:text="${server.getType()}"></td>
+                    <td>
                                     <span th:text="${server.getStatus()}" th:if="${server.status == server.status.SERVER_UP}" class="badge bg-success">
                                     </span>
-                                    <span th:text="${server.getStatus()}" th:if="${server.status == server.status.SERVER_DOWN}" class="badge bg-danger">
+                        <span th:text="${server.getStatus()}" th:if="${server.status == server.status.SERVER_DOWN}" class="badge bg-danger">
                                     </span>
-                            </td>
+                    </td>
 
-                            <td>
-<!--                                <button id="pingButton" type="button" class="btn btn-primary btn-sm update-btn">-->
-<!--                                    Ping-->
-<!--                                </button>-->
-                                <a id="pingButton" style="cursor: pointer;" th:href="@{/ping/{id}(id=${server.ipAddress})}" onclick="return showPingAlert();" >
-                                    <i class="material-icons" title="Ping server"  data-toggle="tooltip" >&#xe328;</i>
-                                    <i id="loadingSpinner" class="loading-icon fa fa-spinner fa-spin hide" style="font-size:24px" ></i>
-                                </a>
-                            </td>
+                    <td>
+                        <!--                                <button id="pingButton" type="button" class="btn btn-primary btn-sm update-btn">-->
+                        <!--                                    Ping-->
+                        <!--                                </button>-->
+                        <a id="pingButton" style="cursor: pointer;" th:href="@{/ping/{id}(id=${server.ipAddress})}" onclick="return showPingAlert();" >
+                            <i class="material-icons" title="Ping server"  data-toggle="tooltip" >&#xe328;</i>
+                            <i id="loadingSpinner" class="loading-icon fa fa-spinner fa-spin hide" style="font-size:24px" ></i>
+                        </a>
+                    </td>
 
-                            <td >
-                                <a id="deleteButton" th:href="@{/deleteServer/{id}(id=${server.id})}" class="delete" style="cursor: pointer;" onclick="return confirmDel();">
-                                    <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                                </a>
+                    <td >
+                        <a id="deleteButton" th:href="@{/deleteServer/{id}(id=${server.id})}" class="delete" style="cursor: pointer;" onclick="return confirmDel();">
+                            <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                        </a>
 
-                            </td>
+                    </td>
 
-                        </tbody>
-                    </table>
+                </tbody>
+            </table>
 
         </div>
     </div>
@@ -180,21 +181,20 @@
     }
 
     function showPingAlert() {
-            var agree = confirm("Do you want to ping this server?");
-            if (agree) {
-                // alert("Server Deleted");
-                $('#newPingAlert').removeClass('hide');
-                return true;
-            }
-            else {
-                return false;
-            }
+        var agree = confirm("Do you want to ping this server?");
+        if (agree) {
+            // alert("Server Deleted");
+            $('#newPingAlert').removeClass('hide');
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-
 </script>
 <script>
-<!-- Same as  $(function(){   -->
     $(document).ready(function () {
+
 
         $('#dismiss, .overlay').on('click', function () {
             // hide sidebar
@@ -211,7 +211,6 @@
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
 
-        // bind change event to select
         $('#dynamicSelect').on('change', function () {
             var uri = $(this).val(); // get selected value
             if (uri) { // require a URL
@@ -222,6 +221,7 @@
 
     });
 </script>
+
 
 </body>
 </html>

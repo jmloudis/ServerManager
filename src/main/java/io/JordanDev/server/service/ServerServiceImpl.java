@@ -103,6 +103,12 @@ public class ServerServiceImpl implements ServerService{
         return serverRepo.findAll();
     }
 
+    @Override
+    public List<Server> getServerStatus(Status status) {
 
 
+        return serverRepo.findByStatus(status);
+
+
+    }
 }
