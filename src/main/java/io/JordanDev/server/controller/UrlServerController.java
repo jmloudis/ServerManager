@@ -27,7 +27,6 @@ public class UrlServerController {
         this.serverService = serverService;
     }
 
-
     @GetMapping("/")
     public String getFullList(Model model){
         model.addAttribute("allServers", serverService.list(30));
