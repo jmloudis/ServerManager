@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eFinance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container container-margin">
+
+    <h1 class="page-title">eFinance Registration</h1>
+    <hr>
+    <form class="row g-3" th:action="@{/saveUser}" th:object="${user}" method="POST">
+        <!-- success message -->
+        <!--        <div th:if="${param.success}">-->
+        <!--            <div class="alert alert-info">You've successfully registered-->
+        <!--                to our awesome app!</div>-->
+        <!--        </div>-->
+        <div class="col-4">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Enter email address" >
+        </div>
+        <div>
+            <label for="userName" class="form-label">Choose Username</label>
+            <input type="text" th:field="*{username}" class="form-control" id="userName" placeholder="Enter username">
+        </div>
+        <div class="col-md-4">
+            <label for="password" class="form-label">Enter Password</label>
+            <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Enter password">
+        </div>
+        <div class="col-md-4">
+            <label for="passwordConfirm" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="passwordConfirm" placeholder="Confirm password">
+        </div>
+        <hr>
+        <!--        <div class="col-12">-->
+        <!--            <a th:href="@{login.html}" class="form-check-label">Already Registered? Login Here!</a>-->
+        <!--        </div>-->
+        <div class="col-12">
+            <button type="submit" class="btn-dark btn-lg col-3" id="formButton">Register</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
